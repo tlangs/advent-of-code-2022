@@ -3,6 +3,14 @@ plugins {
     id 'application'
 }
 
+
+def mainClassName = 'org.tlangs.Main'
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
+
 application {
-    mainClass = 'org.tlangs.Main'
+    mainClass = mainClassName
 }

@@ -1,16 +1,19 @@
 package org.tlangs;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
+import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class Main {
-  public static void main(String[] args) throws URISyntaxException, IOException {
+  public static void main(String[] args) throws IOException {
     var day = args[0];
-    var question = getQuestion(day);
-    question.answer(getInputLines(day));
+    var questionPath = String.format("inputs/question%s", day);
+    try (var resourceInputStream = ClassLoader.getSystemClassLoader().getResourceAsStream(questionPath)) {
+      var inputLines = new BufferedReader(new InputStreamReader(Objects.requireNonNull(resourceInputStream))).lines();
+      var question = getQuestion(day);
+      question.answer(inputLines);
+    }
   }
 
   private static Question getQuestion(String day) {
@@ -18,10 +21,5 @@ public class Main {
       case "1" -> new Question1();
       default -> throw new RuntimeException(String.format("Invalid day: [%s]", day));
     };
-  }
-
-  private static Stream<String> getInputLines(String day) throws URISyntaxException, IOException {
-    var classLoader = ClassLoader.getSystemClassLoader();
-    return Files.lines(Paths.get(classLoader.getResource("inputs/question" + day).toURI()));
   }
 }
