@@ -1,4 +1,4 @@
-package org.example;
+package org.tlangs;
 
 import java.util.Arrays;
 import java.util.Comparator;

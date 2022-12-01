@@ -1,4 +1,4 @@
-package org.example;
+package org.tlangs;
 
 import java.util.stream.Stream;
 
