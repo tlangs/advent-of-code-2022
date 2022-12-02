@@ -1,5 +1,9 @@
 package org.tlangs;
 
+import org.tlangs.question.Question;
+import org.tlangs.question.Question1;
+import org.tlangs.question.Question2;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,6 +23,7 @@ public class Main {
   private static Question getQuestion(String day) {
     return switch (day) {
       case "1" -> new Question1();
+      case "2" -> new Question2();
       default -> throw new RuntimeException(String.format("Invalid day: [%s]", day));
     };
   }

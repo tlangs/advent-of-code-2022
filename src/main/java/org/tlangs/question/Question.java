@@ -1,4 +1,4 @@
-package org.tlangs;
+package org.tlangs.question;
 
 import java.util.stream.Stream;
 

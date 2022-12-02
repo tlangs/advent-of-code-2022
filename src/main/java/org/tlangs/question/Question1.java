@@ -1,4 +1,6 @@
-package org.tlangs;
+package org.tlangs.question;
+
+import org.tlangs.question.Question;
 
 import java.util.Arrays;
 import java.util.Comparator;
