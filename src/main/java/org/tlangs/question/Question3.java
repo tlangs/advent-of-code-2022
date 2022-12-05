@@ -1,10 +1,15 @@
 package org.tlangs.question;
 
+import org.tlangs.Utils;
+
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static org.tlangs.Utils.intersection;
+import static org.tlangs.Utils.sumTwoQuestions;
 
 public class Question3 implements Question {
 
@@ -19,13 +24,14 @@ public class Question3 implements Question {
           .sum();
       // Part 2
       var p2 = groupList.stream().map(this::stringToSetOfChar)
-          .reduce(this::intersection)
+          .reduce(Utils::intersection)
           .stream().mapToInt(o -> o.stream().mapToInt(this::itemValue).sum())
           .sum();
       return new int[] { p1, p2 };
-    }).reduce(new int[] {0, 0}, (int[] current, int[] acc) -> new int[] { current[0] + acc[0], current[1] + acc[1]});
-    System.out.printf("The sum of all shared rucksack compartment items is [%s]%n", answers[0]);
-    System.out.printf("The sum of badges carried by groups of elves is [%s]%n", answers[1]);
+    });
+    var summed = sumTwoQuestions(answers);
+    System.out.printf("The sum of all shared rucksack compartment items is [%s]%n", summed[0]);
+    System.out.printf("The sum of badges carried by groups of elves is [%s]%n", summed[1]);
   }
 
   private Stream<Stream<String>> batch(Stream<String> lines, int batchSize) {
@@ -53,9 +59,5 @@ public class Question3 implements Question {
     } else {
       return (int) item - 96;
     }
-  }
-
-  private <T> Set<Character> intersection(Set<Character> set1, Set<Character> set2) {
-    return set1.stream().filter(set2::contains).collect(Collectors.toSet());
   }
 }
