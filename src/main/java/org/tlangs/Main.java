@@ -6,6 +6,7 @@ import org.tlangs.question.Question2;
 import org.tlangs.question.Question3;
 import org.tlangs.question.Question4;
 import org.tlangs.question.Question5;
+import org.tlangs.question.Question6;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,6 +31,7 @@ public class Main {
       case "3" -> new Question3();
       case "4" -> new Question4();
       case "5" -> new Question5();
+      case "6" -> new Question6();
       default -> throw new RuntimeException(String.format("Invalid day: [%s]", day));
     };
   }
