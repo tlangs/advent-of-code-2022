@@ -114,11 +114,11 @@ public class Question12 implements Question {
   record Position(int x, int y, Adjacency adjacency) {
 
     public Boolean isStart() {
-      return adjacency.elevation == 'S';
+      return adjacency.elevation == 'E';
     }
 
     public Boolean isEnd() {
-      return adjacency.elevation == 'E';
+      return adjacency.elevation == 'a';
     }
 
     @Override
@@ -146,7 +146,7 @@ public class Question12 implements Question {
       return false;
     }
     var thatChar = heightChar(list.get(0));
-    return thisChar >= thatChar - 1;
+    return thisChar <= thatChar + 1;
   }
 
   private Character heightChar(Character thisOne) {
