@@ -14,7 +14,7 @@ public class TwoDimensionalArrayUtils {
   }
 
   public static <T, U, V> ArrayList<ArrayList<V>> runComputation(T[][] lines,
-                                                            BiFunction<T, List<T>, U> compute,
+                                                            BiFunction<T, List<T>, U> directionReducer,
                                                             Combiner<T, U, V> combiner,
                                                             Optional<Integer> localizedLimit) {
     var maxX = lines[0].length;
@@ -24,10 +24,10 @@ public class TwoDimensionalArrayUtils {
       var row = new ArrayList<V>();
       for (int x = 0; x < maxX; x++) {
         var thisOne = lines[y][x];
-        var toTheLeft =  compute.apply(thisOne, lookLeft(lines, x, y, localizedLimit));
-        var toTheRight = compute.apply(thisOne, lookRight(lines, x, y, localizedLimit));
-        var toTheTop = compute.apply(thisOne, lookUp(lines, x, y, localizedLimit));
-        var toTheBottom = compute.apply(thisOne, lookDown(lines, x, y, localizedLimit));
+        var toTheLeft =  directionReducer.apply(thisOne, lookLeft(lines, x, y, localizedLimit));
+        var toTheRight = directionReducer.apply(thisOne, lookRight(lines, x, y, localizedLimit));
+        var toTheTop = directionReducer.apply(thisOne, lookUp(lines, x, y, localizedLimit));
+        var toTheBottom = directionReducer.apply(thisOne, lookDown(lines, x, y, localizedLimit));
         var combined = combiner.apply(thisOne, toTheLeft, toTheRight, toTheTop, toTheBottom);
         row.add(combined);
       }
