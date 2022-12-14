@@ -39,12 +39,14 @@ public class Question13 implements Question {
 
     var divider1Index = allPackets.indexOf(dividerPackets.get(0)) + 1;
     var divider2Index = allPackets.indexOf(dividerPackets.get(1)) + 1;
+    var decoderKey = divider1Index * divider2Index;
 
-    System.out.println(divider1Index * divider2Index);
+    System.out.printf("The decoder key for the distress signal is %d%n", decoderKey);
+
   }
 
   private <T extends Comparable<T>> int isLeftSmaller(NestedList<T> left, NestedList<T> right) {
-    System.out.printf("Compare %s vs %s%n", left, right);
+//    System.out.printf("Compare %s vs %s%n", left, right);
     if (left instanceof SingleValue<T> leftSingleValue && right instanceof SingleValue<T> rightSingleValue) {
       return leftSingleValue.value.compareTo(rightSingleValue.value);
     }
@@ -52,13 +54,13 @@ public class Question13 implements Question {
     ListValue<T> rightListValue;
     if (left instanceof SingleValue<T> leftSingleValue) {
       leftListValue = new ListValue<>(leftSingleValue);
-      System.out.printf("Mixed types; convert left to %s and retry comparison%n", leftListValue);
+//      System.out.printf("Mixed types; convert left to %s and retry comparison%n", leftListValue);
     } else {
       leftListValue = (ListValue<T>) left;
     }
     if (right instanceof SingleValue<T> rightSingleValue) {
       rightListValue = new ListValue<>(rightSingleValue);
-      System.out.printf("Mixed types; convert right to %s and retry comparison%n", rightListValue);
+//      System.out.printf("Mixed types; convert right to %s and retry comparison%n", rightListValue);
     } else {
       rightListValue = (ListValue<T>) right;
     }
@@ -69,24 +71,24 @@ public class Question13 implements Question {
 
     for (int i = 0; i < leftListValue.values().size(); i++) {
       if (rightListValue.values().size() <= i) {
-        System.out.println("- Right side ran out of items, so inputs are not in the right order");
+//        System.out.println("- Right side ran out of items, so inputs are not in the right order");
         return 1;
       } else {
         var leftValue = leftListValue.values().get(i);
         var rightValue = rightListValue.values().get(i);
         var compared = isLeftSmaller(leftValue, rightValue);
         if (compared > 0) {
-          System.out.println("- Right side is smaller, so inputs are not in the right order");
+//          System.out.println("- Right side is smaller, so inputs are not in the right order");
           return compared;
         }
         if (compared < 0) {
-          System.out.println("- Left side is smaller, so inputs are in the right order");
+//          System.out.println("- Left side is smaller, so inputs are in the right order");
           return compared;
         }
       }
     }
     if (leftListValue.values().size() < rightListValue.values().size()) {
-      System.out.println("- Left side ran out of items, so inputs are in the right order");
+//      System.out.println("- Left side ran out of items, so inputs are in the right order");
       return -1;
     }
     return 0;
