@@ -41,7 +41,7 @@ public class Question13 implements Question {
     var divider2Index = allPackets.indexOf(dividerPackets.get(1)) + 1;
     var decoderKey = divider1Index * divider2Index;
 
-    System.out.printf("The decoder key for the distress signal is %d%n", decoderKey);
+    System.out.printf("The decoder key for the distress signal is [%d]%n", decoderKey);
 
   }
 
