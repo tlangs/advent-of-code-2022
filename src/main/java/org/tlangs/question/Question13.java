@@ -27,6 +27,20 @@ public class Question13 implements Question {
       }
     }
     System.out.printf("The sum of indices where pairs are in order is [%d]%n", sum);
+    var dividerPackets = List.of(
+        NestedList.parseFromString("[[2]]", Integer::parseInt),
+        NestedList.parseFromString("[[6]]", Integer::parseInt));
+
+    var allPackets = Stream.concat(
+            listOfPairs.stream()
+                .flatMap(List::stream),
+            dividerPackets.stream())
+        .sorted(this::isLeftSmaller).toList();
+
+    var divider1Index = allPackets.indexOf(dividerPackets.get(0)) + 1;
+    var divider2Index = allPackets.indexOf(dividerPackets.get(1)) + 1;
+
+    System.out.println(divider1Index * divider2Index);
   }
 
   private <T extends Comparable<T>> int isLeftSmaller(NestedList<T> left, NestedList<T> right) {
@@ -208,6 +222,7 @@ public class Question13 implements Question {
     public String toString() {
       return value.toString();
     }
+
     @Override
     public boolean equals(Object o) {
       if (this == o) return true;
