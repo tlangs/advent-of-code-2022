@@ -1,4 +1,4 @@
-package org.tlangs.utils;
+package org.tlangs.utils.grid;
 
 
 import java.util.ArrayList;
@@ -68,5 +68,56 @@ public class TwoDimensionalArrayUtils {
       result.add(lines[i][x]);
     }
     return result;
+  }
+
+  public static Character[][] makeGrid(int minX, int maxX, int minY, int maxY, char fillChar) {
+    var deltaY = maxY - minY;
+    var deltaX = maxX - minX;
+    var array = new Character[deltaY + 1][deltaX + 1];
+    for (int y = minY; y <= maxY; y++) {
+      var row = array[y - minY];
+      for (int x = minX; x <= maxX; x++) {
+        array[y-minY][x - minX] = fillChar;
+      }
+    }
+    return array;
+  }
+
+  public static void printGrid(Character[][] grid, int minX, int minY, List<Integer> xAxisLabels) {
+    var xOffset = Integer.toString(grid.length).length() + 1;
+    var labelHeight = xAxisLabels.stream().mapToInt(l -> l.toString().length()).max().orElse(0);
+    // Labels must be 3-digit integers
+    for (int y = 0; y < labelHeight; y++) {
+      for (int x = 0; x < grid[0].length + xOffset; x++) {
+        var printedLabel = false;
+        for (int label : xAxisLabels) {
+          if (x - xOffset == label - minX) {
+            var labelString = Integer.toString(label);
+            if (labelString.length() > y) {
+              System.out.printf(labelString.substring(y, y + 1));
+              printedLabel = true;
+            }
+          }
+        }
+        if (!printedLabel) {
+          System.out.printf(" ");
+        }
+      }
+      System.out.println();
+    }
+
+
+    for (int y = 0; y < grid.length; y++) {
+      var row = grid[y];
+      var yLabel = Integer.toString(y + minY);
+      while (yLabel.length() < xOffset) {
+        yLabel = yLabel + " ";
+      }
+      System.out.printf("%s", yLabel);
+      for (int x = 0; x < row.length; x++) {
+        System.out.printf(row[x].toString());
+      }
+      System.out.println();
+    }
   }
 }

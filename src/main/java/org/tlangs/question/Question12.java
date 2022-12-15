@@ -1,6 +1,6 @@
 package org.tlangs.question;
 
-import org.tlangs.utils.TwoDimensionalArrayUtils;
+import org.tlangs.utils.grid.TwoDimensionalArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;

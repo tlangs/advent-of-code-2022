@@ -1,5 +1,7 @@
 package org.tlangs.question;
 
+import org.tlangs.utils.grid.TwoDimensionalArrayUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -51,6 +53,10 @@ public class Question14 implements Question {
     return rockPaths.stream().mapToInt(Path::maxX).max().orElseThrow();
   }
 
+  private int minY(List<Path> rockPaths) {
+    return rockPaths.stream().mapToInt(Path::minY).max().orElseThrow();
+  }
+
   private int maxY(List<Path> rockPaths) {
     return rockPaths.stream().mapToInt(Path::maxY).max().orElseThrow();
   }
@@ -63,8 +69,8 @@ public class Question14 implements Question {
     private final Set<Position> allPositions = new HashSet<>();
     public final int minX;
     public final int maxX;
+    private final int minY;
     public final int maxY;
-
     public Cave(List<Path> rockPaths) {
 
       this.rockPaths.addAll(rockPaths);
@@ -73,6 +79,7 @@ public class Question14 implements Question {
 
       this.minX = minX(rockPaths);
       this.maxX = maxX(rockPaths);
+      this.minY = minY(rockPaths);
       this.maxY = maxY(rockPaths);
     }
 
@@ -127,43 +134,7 @@ public class Question14 implements Question {
       sandParticles.forEach(s -> s.draw(array, minX));
 
       array[0][500 - minX] = '+';
-      printGrid(array, minX, maxX);
-    }
-
-    private void printGrid(Character[][] grid, int minX, int maxX) {
-
-      var offset = Integer.toString(grid.length).length() + 1;
-      // Labels must be 3-digit integers
-      for (int y = 0; y < 3; y++) {
-        for (int x = 0; x < grid[0].length + offset; x++) {
-          var printedLabel = false;
-          for (int label : List.of(minX, maxX, 500)) {
-            if (x - offset == label - minX) {
-              var labelString = Integer.toString(label);
-              System.out.printf(labelString.substring(y, y + 1));
-              printedLabel = true;
-            }
-          }
-          if (!printedLabel) {
-            System.out.printf(" ");
-          }
-        }
-        System.out.println();
-      }
-
-
-      for (int y = 0; y < grid.length; y++) {
-        var row = grid[y];
-        var yLabel = Integer.toString(y);
-        while (yLabel.length() < offset) {
-          yLabel = yLabel + " ";
-        }
-        System.out.printf("%s", yLabel);
-        for (int x = 0; x < row.length; x++) {
-          System.out.printf(row[x].toString());
-        }
-        System.out.println();
-      }
+      TwoDimensionalArrayUtils.printGrid(array, minX, minY, List.of(minX, maxX, 500));
     }
   }
 
@@ -287,6 +258,13 @@ public class Question14 implements Question {
       return positions.stream()
           .max(Comparator.comparing(Position::x))
           .map(Position::x)
+          .orElseThrow();
+    }
+
+    public int minY() {
+      return positions.stream()
+          .min(Comparator.comparing(Position::y))
+          .map(Position::y)
           .orElseThrow();
     }
 
